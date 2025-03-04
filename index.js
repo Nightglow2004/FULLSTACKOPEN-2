@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
+const Person = require('./models/person.js')
 
 app.use(express.json())
 
@@ -119,6 +120,12 @@ app.post('/api/persons', (request, response) => {
     persons = persons.concat(person)
 
     response.status(201).json(person)
+})
+
+app.get("/api/persons", (request, response) => {
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 })
 
 const PORT =  process.env.PORT || 3001;
